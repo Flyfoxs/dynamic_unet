@@ -1,4 +1,5 @@
-# 将 Unet 与 Resnet系列 和 EfficientNet 结合 在多项任务中取得最好成绩 (其他系列还在路上)
+# 将 Unet 与 预训练网络结合在多项任务中取得最好成绩 
+> 测试过的预训练网络包括 Resnet系列 和 EfficientNet系列  (其他系列还在路上)
 > 核心改动已经提交到 [fastai](https://github.com/fastai/fastai)
 
 
