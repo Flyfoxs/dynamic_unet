@@ -1,0 +1,46 @@
+# Output
+build
+dist
+docs/_book
+src/version.js
+junit.xml
+coverage/
+.docz/
+
+# YALC (for Erik)
+.yalc
+yalc.lock
+
+# Logging, System files, misc.
+.idea/
+.vscode
+.npm
+npm-debug.log
+package-lock.json
+yarn-error.log
+.DS_Store
+.env
+
+# Common Example Data Directories
+sampledata/
+bin/deps/
+docker/dcm4che/dcm4che-arc
+
+# Cypress test results
+videos/
+
+# Locize settings
+.locize
+input
+output
+*.gz
+*.out
+*.log
+
+.ipynb_checkpoints
+notebook/.ipynb_checkpoints
+
+__*__
+deploy
+*.pth
+
