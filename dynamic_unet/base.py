@@ -19,7 +19,7 @@ def in_channels(m: nn.Module) -> List[int]:
     "Return the shape of the first weight layer in `m`."
     for l in m.modules():
         if hasattr(l, 'weight'): return l.weight.shape[1]
-    raise Exception('No weight layer')
+    raise Exception(f'No weight layer:{type(m)}')
 
 
 def get_unet_config(model, img_size=(512, 512)):
@@ -27,7 +27,7 @@ def get_unet_config(model, img_size=(512, 512)):
     x = torch.rand(1, in_channels(model), *img_size)
     hooks = []
     count = 0
-    layer_mata = []
+    layer_meta = []
     layers = []
 
     def flatten_moduleList(module: nn.Module) -> List[nn.Module]:
@@ -45,7 +45,7 @@ def get_unet_config(model, img_size=(512, 512)):
         nonlocal count
         if len(output.shape) == 4:
             b, c, w, h = output.shape
-            layer_mata.append((count, type(module).__name__, c, w, h, output.shape))
+            layer_meta.append((count, type(module).__name__, c, w, h, output.shape))
         layers.append(module)
         count += 1
 
@@ -57,14 +57,15 @@ def get_unet_config(model, img_size=(512, 512)):
     for h in hooks:
         h.remove()
 
-    layer_mata = pd.DataFrame(layer_mata, columns=['sn', 'layer', 'c', 'w', 'h', 'size'])
+    layer_meta = pd.DataFrame(layer_meta, columns=['sn', 'layer', 'c', 'w', 'h', 'size'])
 
     img_size = [x.shape[-1] // (2 ** i) for i in range(8)]
     img_size = [size for size in img_size if size >= 7]
-    layer_mata = layer_mata.loc[(layer_mata.w.isin(img_size))].drop_duplicates(['w'], keep='last')
+    layer_meta = layer_meta.loc[(layer_meta.w.isin(img_size))].drop_duplicates(['w'], keep='last')
 
-    layer_size = list(layer_mata['size'])
-    layers = [layers[i] for i in layer_mata.sn]
+    print(layer_meta)
+    layer_size = list(layer_meta['size'])
+    layers = [layers[i] for i in layer_meta.sn]
     return layer_size, layers
 
 
@@ -76,6 +77,8 @@ class DynamicUnet(SequentialEx):
                  blur_final=True, self_attention: bool = False,
                  y_range: Optional[Tuple[float, float]] = None,
                  last_cross: bool = True, bottle: bool = False, **kwargs):
+
+
         imsize = tuple(img_size)
         sfs_szs, select_layer = get_unet_config(encoder, img_size)
         ni = sfs_szs[-1][1]

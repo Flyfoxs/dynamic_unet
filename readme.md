@@ -1,7 +1,11 @@
-# 将 Unet与预训练网络结合, 在多项器官分割中取得最好成绩 
-> 测试过的预训练网络包括 Resnet系列 和 EfficientNet系列  (其他系列还在路上)
-> 核心改动已经提交到 [fastai](https://github.com/fastai/fastai)
-
+# 将 Unet与预训练网络结合, 在多项器官分割中取得优异成绩
+-  测试过的预训练网络包括(如有其他需求可提交Issue) 
+    - VGG
+    - Resnet
+    - Densenet
+    - Efficientnet
+    
+-  核心改动已经提交到 [fastai](https://github.com/fastai/fastai)
 
 # Resnet
 ```python
@@ -26,3 +30,5 @@ unet = DynamicUnet(encoder, n_classes=5, img_size=(224, 224), blur=False, blur_f
                     bottle=False)
 print(unet(torch.rand(1,3,224,224)).shape)
 ```
+
+更多其他网络参考: notebook/different_network.ipynb
