@@ -7,7 +7,7 @@
     
 -  核心改动已经提交到 [fastai](https://github.com/fastai/fastai)
 
-# Resnet
+# EfficientNet
 ```python
 encoder = efficient_unet(0)
 unet = DynamicUnet(encoder, n_classes=5, img_size=(224, 224), blur=False, blur_final=False,
@@ -18,9 +18,17 @@ unet = DynamicUnet(encoder, n_classes=5, img_size=(224, 224), blur=False, blur_f
 print(unet(torch.rand(1,3,224,224)).shape)
 ```
 
+# Densenet
+```python
+encoder = nn.Sequential(*list(models.densenet121().children())[0])
+unet = DynamicUnet(encoder, n_classes=5, img_size=(224, 224), blur=False, blur_final=False,
+                    self_attention=False, y_range=None, norm_type=NormType,
+                    last_cross=True,
+                    bottle=False)
+print(unet(torch.rand(1,3,224,224)).shape)
+```
 
-
-# EfficientNet
+# Resnet
 ```python
 encoder = nn.Sequential(*list(models.resnet34().children())[:-3])
 
