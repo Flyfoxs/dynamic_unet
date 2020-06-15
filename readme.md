@@ -31,4 +31,4 @@ unet = DynamicUnet(encoder, n_classes=5, img_size=(224, 224), blur=False, blur_f
 print(unet(torch.rand(1,3,224,224)).shape)
 ```
 
-更多其他网络参考: notebook/different_network.ipynb
+更多其他网络参考: [notebook](https://github.com/Flyfoxs/dynamic_unet/blob/master/notebook/different_network.ipynb)  

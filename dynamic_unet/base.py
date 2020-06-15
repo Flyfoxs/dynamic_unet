@@ -22,6 +22,16 @@ def in_channels(m: nn.Module) -> List[int]:
     raise Exception(f'No weight layer:{type(m)}')
 
 
+def flatten_moduleList(module: nn.Module) -> List[nn.Module]:
+    "If the ModuleList can be found in children, flatten it. Since ModuleList can not support hook "
+    res_list = []
+    for item in module.children():
+        if isinstance(item, nn.ModuleList):
+            res_list.extend(flatten_moduleList(item))
+        else:
+            res_list.append(item)
+    return res_list
+
 def get_unet_config(model, img_size=(512, 512)):
     "Cut the network to several blocks, the width and high of the image are reduced by half. And the image W and H >= 7"
     x = torch.rand(1, in_channels(model), *img_size)
@@ -30,15 +40,6 @@ def get_unet_config(model, img_size=(512, 512)):
     layer_meta = []
     layers = []
 
-    def flatten_moduleList(module: nn.Module) -> List[nn.Module]:
-        "If the ModuleList can be found in children, flatten it. Since ModuleList can not support hook "
-        res_list = []
-        for item in module.children():
-            if isinstance(item, nn.ModuleList):
-                res_list.extend(flatten_moduleList(item))
-            else:
-                res_list.append(item)
-        return res_list
 
     def hook(module, input, output):
         "To get the meta of the layer infomation"
@@ -58,12 +59,13 @@ def get_unet_config(model, img_size=(512, 512)):
         h.remove()
 
     layer_meta = pd.DataFrame(layer_meta, columns=['sn', 'layer', 'c', 'w', 'h', 'size'])
-
     img_size = [x.shape[-1] // (2 ** i) for i in range(8)]
     img_size = [size for size in img_size if size >= 7]
-    layer_meta = layer_meta.loc[(layer_meta.w.isin(img_size))].drop_duplicates(['w'], keep='last')
-
+    layer_meta:pd.DataFrame = layer_meta.loc[(layer_meta.h.isin(img_size))].drop_duplicates(['h'], keep='last')
+    layer_meta = layer_meta.head(5)
     print(layer_meta)
+    assert len(layer_meta) == 5, f'Only cut {len(layer_meta)} layers from the pretrained model '
+
     layer_size = list(layer_meta['size'])
     layers = [layers[i] for i in layer_meta.sn]
     return layer_size, layers
