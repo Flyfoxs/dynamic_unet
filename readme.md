@@ -1,3 +1,4 @@
+[Chinese version](https://github.com/Flyfoxs/dynamic_unet/blob/master/readme_cn.md)
 # Take pretrained model as encoder of UNET, get better score in many organ segmentation task
 -  Already test on these models 
     - VGG
