@@ -1,12 +1,12 @@
-[Chinese version](https://github.com/Flyfoxs/dynamic_unet/blob/master/readme_cn.md)
-# Take pretrained model as encoder of UNET, get better score in many organ segmentation task
--  Already test on these models 
+[English version](https://github.com/Flyfoxs/dynamic_unet/blob/master/readme_en.md)
+# 将 Unet与预训练网络结合, 在多项器官分割中取得优异成绩
+-  测试过的预训练网络包括(如有其他需求可提交Issue) 
     - VGG
     - Resnet
     - Densenet
     - Efficientnet
     
--  The core code submit to fastai [fastai](https://github.com/fastai/fastai)
+-  核心改动已经提交到 [fastai](https://github.com/fastai/fastai)
 
 # EfficientNet
 ```python
@@ -40,4 +40,4 @@ unet = DynamicUnet(encoder, n_classes=5, img_size=(224, 224), blur=False, blur_f
 print(unet(torch.rand(1,3,224,224)).shape)
 ```
 
-You can get more network example: [notebook](https://github.com/Flyfoxs/dynamic_unet/blob/master/notebook/different_network.ipynb)  
+更多其他网络参考: [notebook](https://github.com/Flyfoxs/dynamic_unet/blob/master/notebook/different_network.ipynb)  
