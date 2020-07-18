@@ -64,7 +64,7 @@ def get_unet_config(model, img_size=(512, 512)):
     layer_meta:pd.DataFrame = layer_meta.loc[(layer_meta.h.isin(img_size))].drop_duplicates(['h'], keep='last')
     layer_meta = layer_meta.head(5)
     print(layer_meta)
-    assert len(layer_meta) == 5, f'Only cut {len(layer_meta)} layers from the pretrained model '
+    #assert len(layer_meta) == 5, f'Only cut {len(layer_meta)} layers from the pretrained model '
 
     layer_size = list(layer_meta['size'])
     layers = [layers[i] for i in layer_meta.sn]
