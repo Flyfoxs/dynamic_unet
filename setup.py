@@ -2,9 +2,11 @@
 from setuptools import setup
 import setuptools
 
-
-with open('README.md') as file:
-    long_description = file.read()
+try:
+    with open('README.md') as file:
+        long_description = file.read()
+except Exception as e:
+    print('Readme read failed')
 
 setup(
     name='dynamic_unet',
