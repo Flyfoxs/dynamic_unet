@@ -6,6 +6,12 @@
     - Densenet
     - Efficientnet
     
+    
+# Install
+```shell script
+pip install git+https://github.com/Flyfoxs/dynamic_unet@master
+```
+
 -  The core code submit to fastai [fastai](https://github.com/fastai/fastai)
 
 # EfficientNet

@@ -1,4 +1,5 @@
 [English version](https://github.com/Flyfoxs/dynamic_unet/blob/master/readme_en.md)
+
 # 将 Unet与预训练网络结合, 在多项器官分割中取得优异成绩
 -  测试过的预训练网络包括(如有其他需求可提交Issue) 
     - VGG
@@ -7,6 +8,13 @@
     - Efficientnet
     
 -  核心改动已经提交到 [fastai](https://github.com/fastai/fastai)
+
+
+# Install
+```shell script
+pip install git+https://github.com/Flyfoxs/dynamic_unet@master
+```
+
 
 # EfficientNet
 ```python
