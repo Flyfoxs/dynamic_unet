@@ -10,7 +10,7 @@ except Exception as e:
 
 setup(
     name='dynamic_unet',
-    version='0.1.1',
+    version='0.1.2',
     description='dynamic_unet',
     long_description='dynamic_unet: https://github.com/Flyfoxs/dynamic_unet',
     url='https://github.com/Flyfoxs/dynamic_unet',
